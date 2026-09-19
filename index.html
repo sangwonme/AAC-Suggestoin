@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>말해봐요</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<section class="panel">
+  <div class="panel-head">
+    <h2>고른 카드</h2>
+    <button id="reset" type="button">다시</button>
+  </div>
+  <div id="sentence" aria-live="polite"></div>
+  <h2 class="sub">다음에 이런 말은 어때요?</h2>
+  <div id="suggest"></div>
+</section>
+<section class="panel board">
+  <nav id="tabs"></nav>
+  <div id="cards"></div>
+</section>
+<script src="cards.js"></script>
+<script src="context.js"></script>
+<script src="recommend.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

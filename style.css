@@ -1,0 +1,197 @@
+:root {
+  --green: #5fae7e;
+  --green-soft: #e4f3e9;
+  --yellow: #ffd977;
+  --ink: #3d4a42;
+}
+* { box-sizing: border-box; }
+button {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+body {
+  margin: 0;
+  padding: clamp(10px, 3vw, 20px);
+  padding-left: max(clamp(10px, 3vw, 20px), env(safe-area-inset-left));
+  padding-right: max(clamp(10px, 3vw, 20px), env(safe-area-inset-right));
+  padding-bottom: max(clamp(10px, 3vw, 20px), env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+  gap: clamp(12px, 3vw, 20px);
+  -webkit-text-size-adjust: 100%;
+  font-family: "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  background: #f3f8f2;
+  color: var(--ink);
+}
+.panel {
+  background: #fff;
+  border-radius: 24px;
+  padding: clamp(12px, 3vw, 20px);
+  min-width: 0;
+  box-shadow: 0 2px 10px rgba(61, 74, 66, .06);
+}
+.panel-head {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+h2 { margin: 0; font-size: 20px; }
+h2.sub { margin: 18px 0 10px; font-size: 17px; color: #6f8478; }
+#reset {
+  font: inherit;
+  font-size: 18px;
+  padding: 12px 26px;
+  border: none;
+  border-radius: 999px;
+  background: var(--yellow);
+  color: var(--ink);
+  cursor: pointer;
+}
+#sentence {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  min-height: 150px;
+  align-items: center;
+  padding: 10px;
+  border: 2px dashed var(--green-soft);
+  border-radius: 18px;
+}
+#sentence .chip {
+  flex: 0 0 auto;
+  width: 110px;
+  font: inherit;
+  font-size: 16px;
+  text-align: center;
+  background: var(--green-soft);
+  border: 3px solid transparent;
+  border-radius: 18px;
+  padding: 8px;
+  color: var(--ink);
+  cursor: pointer;
+}
+#sentence .chip:active { border-color: var(--green); }
+#sentence img { width: 100%; aspect-ratio: 1; object-fit: contain; }
+#tabs {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 14px;
+  border-bottom: 2px solid #eef4ef;
+  margin-bottom: 16px;
+}
+#tabs button {
+  font: inherit;
+  font-size: 18px;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 999px;
+  background: #f3f8f2;
+  color: var(--ink);
+  cursor: pointer;
+  white-space: nowrap;
+}
+#tabs button[aria-pressed="true"] { background: var(--green); color: #fff; }
+#cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 14px;
+}
+.card { position: relative; }
+.card .pick {
+  font: inherit;
+  font-size: 18px;
+  width: 100%;
+  background: #fff;
+  border: 3px solid #eef4ef;
+  border-radius: 20px;
+  padding: 10px;
+  cursor: pointer;
+  color: var(--ink);
+}
+.card .pick:active { border-color: var(--green); background: var(--green-soft); }
+.card img { width: 100%; aspect-ratio: 1; object-fit: contain; }
+.card .star {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 40px;
+  height: 40px;
+  font-size: 22px;
+  line-height: 1;
+  border: none;
+  border-radius: 50%;
+  background: #f3f8f2;
+  color: #cfdbd2;
+  cursor: pointer;
+}
+.card .star[aria-pressed="true"] { background: var(--yellow); color: #fff; }
+
+#suggest {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+#suggest .card { flex: 0 0 110px; }
+#suggest .pick { border-color: var(--yellow); }
+
+/* 휴대폰: 페이지 자체는 고정, 카드 격자만 안에서 스크롤 */
+@media (max-width: 600px) {
+  html { height: 100%; }
+  body {
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
+  }
+  h2 { font-size: 17px; }
+  h2.sub { font-size: 15px; margin: 12px 0 8px; }
+  #reset { font-size: 16px; padding: 10px 18px; }
+  .panel-head { margin-bottom: 10px; }
+  #sentence { min-height: 88px; gap: 8px; padding: 8px; }
+  #sentence .chip { width: 68px; padding: 6px; font-size: 13px; }
+  
+
+  /* 다음 말: 2줄로 깔고 가로 스크롤 (왼쪽부터 추천 순위 높은 순) */
+  #suggest {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-rows: repeat(2, auto);
+    grid-auto-columns: 76px;
+    gap: 8px;
+  }
+  #suggest .card { flex: none; }
+  #suggest .pick { font-size: 13px; padding: 6px; border-radius: 14px; }
+
+  /* 아래 패널이 남은 높이를 다 먹고, 격자만 스크롤 */
+  .board {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+  #tabs { gap: 6px; padding-bottom: 10px; margin-bottom: 12px; flex: none; }
+  #tabs button { font-size: 15px; padding: 10px 16px; }
+  #cards {
+    grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+    gap: 10px;
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
+    align-content: start;
+    padding-bottom: 4px;
+  }
+  .card .pick { font-size: 15px; padding: 8px; border-radius: 16px; }
+  .card .star { width: 34px; height: 34px; font-size: 18px; top: 5px; right: 5px; }
+}
+
+/* 가로로 눕힌 휴대폰: 문장 줄과 추천 줄을 더 눌러 격자 자리를 확보 */
+@media (max-height: 480px) and (orientation: landscape) {
+  #sentence { min-height: 72px; }
+  #sentence .chip { width: 60px; }
+  #suggest { grid-template-rows: auto; grid-auto-columns: 68px; }
+}
