@@ -1,0 +1,56 @@
+[
+    {
+        "label": "asyncio,",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "asyncio.",
+        "description": "asyncio.",
+        "detail": "asyncio.",
+        "documentation": {}
+    },
+    {
+        "label": "scan",
+        "kind": 2,
+        "importPath": "build",
+        "description": "build",
+        "peekOfCode": "def scan():\n    out = []\n    for cat in sorted(os.listdir(f\"{ROOT}/aac_images\")):\n        d = f\"{ROOT}/aac_images/{cat}\"\n        if not os.path.isdir(d):\n            continue\n        for f in sorted(os.listdir(d)):\n            if f.endswith(\".png\"):\n                out.append({\"c\": cat, \"w\": f[:-4]})\n    return out",
+        "detail": "build",
+        "documentation": {}
+    },
+    {
+        "label": "ROOT",
+        "kind": 5,
+        "importPath": "build",
+        "description": "build",
+        "peekOfCode": "ROOT = os.path.dirname(os.path.abspath(__file__))\nVOICE = \"ko-KR-SunHiNeural\"\ndef scan():\n    out = []\n    for cat in sorted(os.listdir(f\"{ROOT}/aac_images\")):\n        d = f\"{ROOT}/aac_images/{cat}\"\n        if not os.path.isdir(d):\n            continue\n        for f in sorted(os.listdir(d)):\n            if f.endswith(\".png\"):",
+        "detail": "build",
+        "documentation": {}
+    },
+    {
+        "label": "VOICE",
+        "kind": 5,
+        "importPath": "build",
+        "description": "build",
+        "peekOfCode": "VOICE = \"ko-KR-SunHiNeural\"\ndef scan():\n    out = []\n    for cat in sorted(os.listdir(f\"{ROOT}/aac_images\")):\n        d = f\"{ROOT}/aac_images/{cat}\"\n        if not os.path.isdir(d):\n            continue\n        for f in sorted(os.listdir(d)):\n            if f.endswith(\".png\"):\n                out.append({\"c\": cat, \"w\": f[:-4]})",
+        "detail": "build",
+        "documentation": {}
+    },
+    {
+        "label": "cards",
+        "kind": 5,
+        "importPath": "build",
+        "description": "build",
+        "peekOfCode": "cards = scan()\nmade = asyncio.run(speak(cards, \"--all\" in sys.argv))\nwith open(f\"{ROOT}/cards.js\", \"w\") as f:\n    f.write(\"const CARDS = \" + json.dumps(cards, ensure_ascii=False) + \";\\n\")\nprint(f\"카드 {len(cards)}장, 음성 {made}개 생성\")",
+        "detail": "build",
+        "documentation": {}
+    },
+    {
+        "label": "made",
+        "kind": 5,
+        "importPath": "build",
+        "description": "build",
+        "peekOfCode": "made = asyncio.run(speak(cards, \"--all\" in sys.argv))\nwith open(f\"{ROOT}/cards.js\", \"w\") as f:\n    f.write(\"const CARDS = \" + json.dumps(cards, ensure_ascii=False) + \";\\n\")\nprint(f\"카드 {len(cards)}장, 음성 {made}개 생성\")",
+        "detail": "build",
+        "documentation": {}
+    }
+]

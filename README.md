@@ -81,59 +81,8 @@
 
 ---
 
-## 카드 추가하기
-
-1. `aac_images/` 안의 원하는 카테고리 폴더에 그림을 넣습니다.
-   파일 이름이 그대로 카드 이름이 됩니다. (`aac_images/음식/떡볶이.png` → `떡볶이` 카드)
-2. 터미널에서 아래를 실행합니다.
-
-   ```bash
-   pip install edge-tts      # 처음 한 번만
-   python3 build.py
-   ```
-
-`build.py`가 카드 목록(`cards.js`)을 다시 만들고, **음성이 없는 카드만** 골라 소리를 만들어 넣습니다.
-이미 있는 음성은 건드리지 않습니다. 전부 다시 만들려면 `python3 build.py --all`.
-
-새 카드를 추천에도 태우려면 `context.js`의 `FRAMES`에서 어울리는 줄에 단어를 추가하세요.
-예를 들어 떡볶이는 `"먹기"` 줄 끝에 `,떡볶이`를 붙이면 됩니다. 안 넣어도 카드는 정상 동작합니다.
-
----
-
-## 인터넷에 올리기 (GitHub Pages)
-
-빌드 과정이 없습니다. 폴더를 그대로 올리면 됩니다.
-
-```bash
-git init -b main && git add -A && git commit -m "말해봐요"
-gh repo create <저장소이름> --public --source=. --push
-```
-
-올린 뒤 GitHub 저장소에서 `Settings` → `Pages` → Source를 `main` / `(root)`로 두면
-몇 분 뒤 주소가 나옵니다.
-
----
-
-## 파일 구조
-
-| 파일 | 하는 일 |
-|---|---|
-| `index.html` | 화면 뼈대 |
-| `style.css` | 색과 배치 (초록·노랑 테마, 휴대폰 대응) |
-| `script.js` | 카드 누르기, 소리, 즐겨찾기 |
-| `cards.js` | 카드 201장 목록 — `build.py`가 만듦 |
-| `context.js` | 추천에 쓰는 표 (쓰임새 태그, 말 순서, 자주 쓰는 말) |
-| `recommend.js` | 추천 계산 |
-| `build.py` | 카드 목록·음성 만들기 |
-| `aac_images/` | 카드 그림 |
-| `aac_audios/` | 카드 음성 |
-
----
-
-## 만든 재료
+## 라이선스
 
 - **그림** — [ARASAAC](https://arasaac.org) 픽토그램. 저자 Sergio Palao, 제공 [ARASAAC](https://arasaac.org),
   소유 Gobierno de Aragón, 라이선스 [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/).
   **비영리 용도로만** 쓸 수 있고, 다시 배포할 때도 같은 조건과 출처 표기가 필요합니다.
-- **음성** — Microsoft Edge 온라인 음성(`ko-KR-SunHiNeural`)으로 미리 만들어 둔 mp3.
-  앱을 쓸 때는 mp3 파일만 재생하므로 인터넷이 필요 없습니다.
