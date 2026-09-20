@@ -79,3 +79,6 @@ $("reset").onclick = () => {
   selected.length = 0;
   renderSentence();
 };
+
+$("guide").onclick = () => $("guide-dialog").showModal();
+$("guide-close").onclick = () => $("guide-dialog").close();

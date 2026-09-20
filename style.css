@@ -49,6 +49,71 @@ h2.sub { margin: 18px 0 10px; font-size: 17px; color: #6f8478; }
   color: var(--ink);
   cursor: pointer;
 }
+#guide {
+  font: inherit;
+  font-size: 18px;
+  font-weight: 700;
+  margin-left: auto;
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: 50%;
+  background: var(--green-soft);
+  color: var(--green);
+  cursor: pointer;
+}
+#guide-dialog {
+  width: min(640px, calc(100% - 24px));
+  max-height: 85dvh;
+  padding: 0;
+  border: none;
+  border-radius: 24px;
+  color: var(--ink);
+  font-family: inherit;
+  overflow: hidden;
+}
+#guide-dialog::backdrop { background: rgba(61, 74, 66, .45); }
+.guide-head {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 20px;
+  border-bottom: 2px solid #eef4ef;
+}
+#guide-close {
+  font: inherit;
+  font-size: 18px;
+  margin-left: auto;
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  background: #f3f8f2;
+  color: var(--ink);
+  cursor: pointer;
+}
+.guide-body {
+  padding: 4px 20px 24px;
+  overflow-y: auto;
+  max-height: calc(85dvh - 76px);
+  line-height: 1.65;
+  font-size: 16px;
+}
+.guide-body h3 { font-size: 17px; margin: 22px 0 6px; color: var(--green); }
+.guide-body p, .guide-body ul { margin: 6px 0; }
+.guide-body ul { padding-left: 20px; }
+.guide-body code {
+  background: var(--green-soft);
+  border-radius: 6px;
+  padding: 1px 6px;
+}
+.guide-body table { border-collapse: collapse; width: 100%; margin: 10px 0; }
+.guide-body th, .guide-body td {
+  border: 1px solid #eef4ef;
+  padding: 6px 10px;
+  text-align: left;
+}
+.guide-body th { background: #f3f8f2; }
 #sentence {
   display: flex;
   gap: 12px;
@@ -148,22 +213,16 @@ h2.sub { margin: 18px 0 10px; font-size: 17px; color: #6f8478; }
     overflow: hidden;
   }
   h2 { font-size: 17px; }
-  h2.sub { font-size: 15px; margin: 12px 0 8px; }
+  h2.sub { font-size: 15px; margin: 8px 0 6px; }
   #reset { font-size: 16px; padding: 10px 18px; }
-  .panel-head { margin-bottom: 10px; }
-  #sentence { min-height: 88px; gap: 8px; padding: 8px; }
-  #sentence .chip { width: 68px; padding: 6px; font-size: 13px; }
+  .panel-head { margin-bottom: 8px; }
+  #sentence { min-height: 76px; gap: 8px; padding: 8px; }
+  #sentence .chip { width: 60px; padding: 6px; font-size: 13px; }
   
 
-  /* 다음 말: 2줄로 깔고 가로 스크롤 (왼쪽부터 추천 순위 높은 순) */
-  #suggest {
-    display: grid;
-    grid-auto-flow: column;
-    grid-template-rows: repeat(2, auto);
-    grid-auto-columns: 76px;
-    gap: 8px;
-  }
-  #suggest .card { flex: none; }
+  /* 다음 말: 1줄 고정, 옆으로 밀어 보기 (왼쪽부터 추천 순위 높은 순) */
+  #suggest { gap: 8px; }
+  #suggest .card { flex: 0 0 68px; }
   #suggest .pick { font-size: 13px; padding: 6px; border-radius: 14px; }
 
   /* 아래 패널이 남은 높이를 다 먹고, 격자만 스크롤 */
@@ -176,22 +235,36 @@ h2.sub { margin: 18px 0 10px; font-size: 17px; color: #6f8478; }
   #tabs { gap: 6px; padding-bottom: 10px; margin-bottom: 12px; flex: none; }
   #tabs button { font-size: 15px; padding: 10px 16px; }
   #cards {
-    grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
-    gap: 10px;
+    grid-template-columns: repeat(auto-fill, minmax(84px, 1fr));
+    gap: 8px;
     flex: 1;
     min-height: 0;
     overflow-y: auto;
     overscroll-behavior-y: contain;
     align-content: start;
     padding-bottom: 4px;
+    /* 화면이 짧아도 최소 2줄은 보이게: 남은 높이의 절반, 대신 140px 넘지 않게 */
+    grid-auto-rows: min(calc((100% - 8px) / 2), 140px);
   }
-  .card .pick { font-size: 15px; padding: 8px; border-radius: 16px; }
-  .card .star { width: 34px; height: 34px; font-size: 18px; top: 5px; right: 5px; }
+  /* 칸 높이에 맞춰 그림이 줄어들도록 */
+  .card .pick {
+    font-size: 13px;
+    padding: 6px;
+    border-radius: 14px;
+    border-width: 2px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  #cards .card img { aspect-ratio: auto; flex: 1; min-height: 0; }
+  .card .star { width: 30px; height: 30px; font-size: 16px; top: 4px; right: 4px; }
+  #guide { width: 38px; height: 38px; font-size: 16px; }
 }
 
 /* 가로로 눕힌 휴대폰: 문장 줄과 추천 줄을 더 눌러 격자 자리를 확보 */
 @media (max-height: 480px) and (orientation: landscape) {
   #sentence { min-height: 72px; }
   #sentence .chip { width: 60px; }
-  #suggest { grid-template-rows: auto; grid-auto-columns: 68px; }
+  #suggest .card { flex: 0 0 68px; }
 }
